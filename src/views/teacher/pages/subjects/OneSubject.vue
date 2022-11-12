@@ -1,0 +1,3 @@
+<template>
+    Selected subject
+</template>
