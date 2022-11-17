@@ -173,14 +173,12 @@
 import axios from 'axios';
 import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { FormWizard, TabContent } from 'vue-step-wizard'
-import 'vue-step-wizard/dist/vue-step-wizard.css'
+
 export default {
     name: "Lesson Plan ",
     components: {
         QuillEditor,
-        FormWizard,
-        TabContent
+
     },
 
     data() {

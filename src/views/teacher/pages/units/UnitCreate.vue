@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Create Subject</h4>
+                    <h4>Create Unit</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -18,7 +18,6 @@
                                     <select class="form-control" v-model="subject.class_id">
                                         <option value="0">-- Select Class --</option>
                                         <option v-for="item in classes" :value="item.id">{{ item.name }} </option>
-
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Create</button>

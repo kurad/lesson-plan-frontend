@@ -3,24 +3,26 @@
         <h5 class="card-header bg-primary mb-3">Class Subjects</h5>
         <div class="card-body">
             <div class="col-12 mb-2 text-end">
-                <router-link :to="{ name: 'subject.create' }" class="btn btn-primary btn-sm float-right mr-4"><i
+                <router-link :to="{ name: 'unit.create' }" class="btn btn-primary btn-sm float-right mr-4"><i
                         class="fas fa-plus mr-1"></i>Add
-                    New Subject</router-link>
+                    New Unit</router-link>
             </div>
             <table class="table">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Subject Name</th>
-                        <th>Class Name</th>
+                        <th>Subject</th>
+                        <th>Unit Title</th>
+                        <th>Unit Key Competence</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in subjects" @key="index">
+                    <tr v-for="(item, index) in units" @key="index">
                         <td>{{ index + 1 }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.class_id }}</td>
+                        <td>{{ item.subject.name }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.key_unit_competence }}</td>
                         <td>
                             <router-link :to="{ name: 'subject.units', params: { id: item.id } }"
                                 class="btn btn-default">
@@ -41,24 +43,24 @@ export default {
     data() {
         return {
             user: '',
-            subject: 0,
-            subjects: []
+            unit: 0,
+            units: []
         }
     },
     methods: {
 
-        async getSubjects() {
-            await axios.get(`http://localhost:8000/api/v1/subject-management/user`)
+        async getUnits() {
+            await axios.get(`http://localhost:8000/api/v1/unit-management/subject/`)
                 .then(response => {
-                    this.subjects = response.data
+                    this.units = response.data
                 }).catch(error => {
                     console.log(error)
-                    this.subjects = []
+                    this.units = []
                 })
         },
     },
     created() {
-        this.getSubjects();
+        this.getUnits();
         axios.defaults.headers.common['Content-Type'] = 'application/json'
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 

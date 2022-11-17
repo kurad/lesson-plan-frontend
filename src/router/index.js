@@ -18,9 +18,9 @@ import SubjectUnits from '@/views/teacher/pages/units/UnitView.vue'
 import LessonCreateSteps from '@/views/teacher/pages/lesson/LessonCreateSteps.vue'
 import LessonList from '@/views/teacher/pages/lesson/LessonList.vue'
 import LessonPlanCreate from '@/views/teacher/pages/lesson/LessonPlanCreate.vue'
-import axios from 'axios'
-//axios.defaults.baseURL = 'http://localhost:8000/api/';
-//axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+import UnitList from '@/views/teacher/pages/units/UnitList'
+import UnitCreate from '@/views/teacher/pages/units/UnitCreate'
+
 const routes = [
   {
     path: '/',
@@ -73,9 +73,7 @@ const routes = [
     },
     children: [
       {
-        path: '/classes',
-        name: 'classes',
-        component: TeacherClasses
+        path: '/classes', name: 'classes', component: TeacherClasses
       },
       {
         path: '/class/view/:id', name: 'classes.view', component: ViewClass
@@ -95,7 +93,12 @@ const routes = [
       {
         path: '/teacher/subject/unit/:id', name: 'subject.units', component: SubjectUnits
       },
-
+      {
+        path: '/teacher/units', name: 'units', component: UnitList
+      },
+      {
+        path: '/teacher/unit/create', name: 'unit.create', component: UnitCreate
+      },
       {
         path: '/teacher/lesson/new', name: 'lesson.new', component: LessonCreateSteps
       },

@@ -202,24 +202,24 @@ export default {
                 this.units = response.data
             }.bind(this));
         },
-        addLesson() {
-            axios
-                .post('http://localhost:8000/api/v1/lesson-management', {
-                    title: this.formData.title,
-                    unitId: this.formData.unit_id,
-                    topicArea: this.formData.topic_area,
-                    duration: this.formData.duration,
-                    lessonDate: this.formData.date,
-                    instructions: this.formData.instructional_objective,
-                    knowledge: this.formData.knowledge_and_understanding,
-                    skills: this.formData.skills,
-                    attitudes: this.formData.attitudes_and_values,
-                    materials: this.formData.teaching_materials,
-                    description: this.formData.description_of_teaching,
-                    reference: this.formData.reference,
-                })
+        async addLesson() {
+            await axios.post('http://localhost:8000/api/v1/lesson-management', {
+                title: this.formData.title,
+                unitId: this.formData.unit_id,
+                topicArea: this.formData.topic_area,
+                duration: this.formData.duration,
+                lessonDate: this.formData.date,
+                instructions: this.formData.instructional_objective,
+                knowledge: this.formData.knowledge_and_understanding,
+                skills: this.formData.skills,
+                attitudes: this.formData.attitudes_and_values,
+                materials: this.formData.teaching_materials,
+                description: this.formData.description_of_teaching,
+                reference: this.formData.reference,
+            })
                 .then(response => (
-                    this.$router.push({ name: 'lesson.plan.create' })
+                    this.$router.push({ name: 'lesson.plan.create' }),
+                    console.log(response)
                 ))
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)

@@ -92,6 +92,12 @@
                 </router-link>
             </li>
             <li class="nav-item">
+                <router-link :to="{ name: 'units' }" class="nav-link">
+                    <i class="nav-icon fas fa-book"></i>
+                    <p> Units </p>
+                </router-link>
+            </li>
+            <li class="nav-item">
                 <router-link :to="{ name: 'lesson.list' }" class="nav-link">
                     <i class="nav-icon fas fa-book"></i>
                     <p> My Lessons </p>
