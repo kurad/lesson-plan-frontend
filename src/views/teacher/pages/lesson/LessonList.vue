@@ -11,16 +11,20 @@
                 <th>Title</th>
                 <th>Unit</th>
                 <th>Topic Area</th>
+                <th>Date</th>
                 <th>Action</th>
             </tr>
             <tbody>
-                <tr v-for="(item, index) in lessons" @key="index">
-                    <td>{{ index + 1 }}</td>
+                <tr v-for="item in lessons" :key="item.id">
+                    <td>{{ item.id }}</td>
                     <td>{{ item.title }}</td>
                     <td>{{ item.unitName }}</td>
                     <td>{{ item.topic_area }}</td>
+                    <td>{{ item.date }}</td>
                     <td>
-                        <router-link to="#" class="btn btn-primary mr-2 btn-sm"><i class="fas fa-ellipsis-v"></i> Select
+                        <router-link :to="{ name: 'lesson.parts', params: { id: item.id } }"
+                            class="btn btn-primary mr-2 btn-sm"><i class="fas fa-ellipsis-v"></i> Go to
+                            Lesson Plan
                         </router-link>
 
                         <router-link to="#" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Edit
@@ -41,7 +45,8 @@ export default {
     name: "Lessons",
     data() {
         return {
-            lessons: []
+            lessons: [],
+
         }
     },
     mounted() {
@@ -52,13 +57,14 @@ export default {
     },
     methods: {
         async getLessons() {
-            await axios.get('http://localhost:8000/api/v1/lesson-management/lessons/user').then(response => {
+            await axios.get(`http://localhost:8000/api/v1/lesson-management/lessons/user`).then(response => {
                 this.lessons = response.data
             }).catch(error => {
                 console.log(error)
                 this.lessons = []
             })
         },
+
         deleteClass(id) {
             if (confirm("Are you sure to delete this class ?")) {
                 axios.delete(`http://localhost:8000/api/v1/class-setup/${id}`).then(response => {

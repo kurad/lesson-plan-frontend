@@ -11,6 +11,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>Unit No</th>
                         <th>Subject</th>
                         <th>Unit Title</th>
                         <th>Unit Key Competence</th>
@@ -20,13 +21,16 @@
                 <tbody>
                     <tr v-for="(item, index) in units" @key="index">
                         <td>{{ index + 1 }}</td>
-                        <td>{{ item.subject.name }}</td>
+                        <td>{{ item.unit_no }}</td>
+                        <td>{{ item.name }}</td>
                         <td>{{ item.title }}</td>
-                        <td>{{ item.key_unit_competence }}</td>
+                        <td>
+                            <span v-html="item.key_unit_competence"></span>
+                        </td>
                         <td>
                             <router-link :to="{ name: 'subject.units', params: { id: item.id } }"
-                                class="btn btn-default">
-                                <i class="fas fa-bars"></i> Subject Details
+                                class="btn btn-default btn-sm">
+                                <i class="fas fa-pencil"></i> Edit
                             </router-link>
                         </td>
                     </tr>
@@ -50,7 +54,7 @@ export default {
     methods: {
 
         async getUnits() {
-            await axios.get(`http://localhost:8000/api/v1/unit-management/subject/`)
+            await axios.get(`http://localhost:8000/api/v1/unit-management/user`)
                 .then(response => {
                     this.units = response.data
                 }).catch(error => {

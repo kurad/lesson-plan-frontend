@@ -6,24 +6,44 @@
                     <h4>Create Unit</h4>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form @submit.prevent="createSubject">
+                    <form @submit.prevent="createUnit">
+                        <div class="row">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input type="text" class="form-control" v-model="subject.name">
+                                    <label>Unit No</label>
+                                    <input type="number" class="form-control" v-model="unit.unitNo">
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Unit Title</label>
+                                    <input type="text" class="form-control" v-model="unit.title">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Class</label>
-                                    <select class="form-control" v-model="subject.class_id">
+                                    <select class="form-control" v-model="unit.subjectId">
                                         <option value="0">-- Select Class --</option>
-                                        <option v-for="item in classes" :value="item.id">{{ item.name }} </option>
+                                        <option v-for="item in subjects" :value="item.id">{{ item.name }} </option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Create</button>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Key Unit Competence</label>
+                                    <QuillEditor theme="snow" v-model:content="unit.unitCompetence" content-type="html">
+                                    </QuillEditor>
+                                </div>
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -32,34 +52,43 @@
 
 <script>
 import axios from 'axios'
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import { ref } from 'vue'
 export default {
+    name: "Create Unit",
+    components: {
+        QuillEditor
+    },
     data() {
         return {
             user: '',
             loginType: '',
-            classe: 0,
-            classes: [],
-            subject: {
-                subjectName: null,
-                userId: null,
-                classId: null
+            subject: 0,
+            subjects: [],
+            unit: {
+                unitNo: null,
+                title: null,
+                unitCompetence: ref(''),
+                subjectId: null
             }
         }
     },
     methods: {
-        getClasses() {
-            axios.get('http://localhost:8000/api/v1/class-setup')
+        getSubjects() {
+            axios.get('http://localhost:8000/api/v1/subject-management/user')
                 .then(function (response) {
-                    this.classes = response.data;
+                    this.subjects = response.data;
                 }.bind(this));
         },
-        createSubject() {
-            axios.post('http://localhost:8000/api/v1/subject-management', {
-                subjectName: this.subject.name,
-                userId: this.user.id,
-                classId: this.subject.class_id,
+        createUnit() {
+            axios.post('http://localhost:8000/api/v1/unit-management', {
+                title: this.unit.title,
+                unitNo: this.unit.unitNo,
+                unitCompetence: this.unit.unitCompetence,
+                subjectId: this.unit.subjectId,
             }).then(response => (
-                this.$router.push({ name: 'subject.list' })
+                this.$router.push({ name: 'units' })
             ))
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
@@ -67,7 +96,7 @@ export default {
 
     },
     created() {
-        this.getClasses();
+        this.getSubjects();
         axios.defaults.headers.common['Content-Type'] = 'application/json'
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 

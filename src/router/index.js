@@ -20,6 +20,8 @@ import LessonList from '@/views/teacher/pages/lesson/LessonList.vue'
 import LessonPlanCreate from '@/views/teacher/pages/lesson/LessonPlanCreate.vue'
 import UnitList from '@/views/teacher/pages/units/UnitList'
 import UnitCreate from '@/views/teacher/pages/units/UnitCreate'
+import LessonView from '@/views/teacher/pages/lesson/LessonPlanCreate'
+import LessonPartSetup from '@/views/teacher/pages/lesson/lessonIntroduction/SetLessonParts'
 
 const routes = [
   {
@@ -107,7 +109,11 @@ const routes = [
       },
 
       {
-        path: '/teacher/lesson/plan/create', name: 'lesson.plan.create', component: LessonPlanCreate
+        path: '/teacher/lesson/plan/create/:id', name: 'lesson.plan.create', component: LessonPlanCreate
+      },
+
+      {
+        path: '/teacher/lesson/parts/:id', name: 'lesson.parts', component: LessonPartSetup
       }
     ]
   },
