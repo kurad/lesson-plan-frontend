@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Class</label>
-                                    <select class="form-control" v-model="subject.class_id">
+                                    <select class="form-control" v-model="subject.classId">
                                         <option value="0">-- Select Class --</option>
                                         <option v-for="item in classes" :value="item.id">{{ item.name }} </option>
 
@@ -42,7 +42,7 @@ export default {
             classes: [],
             subject: {
                 subjectName: null,
-                userId: null,
+                // userId: null,
                 classId: null
             }
         }
@@ -57,8 +57,8 @@ export default {
         createSubject() {
             axios.post('http://localhost:8000/api/v1/subject-management', {
                 subjectName: this.subject.name,
-                userId: this.user.id,
-                classId: this.subject.class_id,
+                // userId: this.user.id,
+                classId: this.subject.classId,
             }).then(response => (
                 this.$router.push({ name: 'subject.list' })
             ))

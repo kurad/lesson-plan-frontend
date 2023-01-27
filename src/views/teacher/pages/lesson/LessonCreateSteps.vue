@@ -12,7 +12,7 @@
                                         <select class="form-control select2" v-model="subject" @change="getUnits()">
                                             <option value="0">-- Select Subject --</option>
                                             <option v-for="item in subjects" :key="item.id" :value="item.id">{{
-                                                    item.name
+                                                    item.subjectName
                                             }} </option>
 
                                         </select>

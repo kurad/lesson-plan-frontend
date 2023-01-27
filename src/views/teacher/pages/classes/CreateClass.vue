@@ -3,13 +3,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Class Setup</h4>
+                    <h4>Class Setup: {{ user }} </h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
                             <form @submit.prevent="addClass">
                                 <div class="form-group">
+                                    <label>{{ user }}</label>
                                     <label>Class Name</label>
                                     <input type="text" class="form-control" v-model="classe.name">
                                 </div>
@@ -39,11 +40,15 @@ import axios from 'axios'
 export default {
     data() {
         return {
+            user: '',
+            loginType: '',
             classe: {
+
                 name: null,
                 size: null,
                 learner_with_SEN: null,
-                location: null
+                location: null,
+                user_id: null,
 
             }
         }
@@ -55,13 +60,34 @@ export default {
                     name: this.classe.name,
                     size: this.classe.size,
                     SEN: this.classe.learner_with_SEN,
-                    location: this.classe.location
+                    location: this.classe.location,
+                    userId: this.user.id
+
                 })
                 .then(response => (
                     this.$router.push({ name: 'classes' })
                 ))
                 .catch(err => console.log(err))
                 .finally(() => this.loading = false)
+        },
+        mounted() {
+            this.getUser()
+        },
+        async getUser() {
+            await axios.get(`http://localhost:8000/api/user`)
+                .then(response => {
+                    this.user = response.data
+                    this.loginType = response.data.roles[0].name
+
+                    console.log(this.user)
+                })
+                .catch(error => {
+                    if (error.response.status === 401) {
+                        localStorage.clear();
+                        this.$router.push('/login')
+                    }
+                    console.error(error);
+                })
         }
     }
 }

@@ -28,13 +28,22 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <router-link :to="{ name: 'admin.units' }" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
-                        Simple Link
+                        Units
 
                     </p>
-                </a>
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link :to="{ name: 'admin.units' }" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Lessons
+
+                    </p>
+                </router-link>
             </li>
         </ul>
     </nav>
@@ -103,19 +112,16 @@
                     <p> My Lessons </p>
                 </router-link>
             </li>
-            <li class="nav-item">
-                <router-link to="#" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
-                    <p> My new Lessons </p>
-                </router-link>
-            </li>
+
 
         </ul>
     </nav>
 </template>
 <script>
 import axios from 'axios'
+import UserClasses from '@/views/teacher/pages/classes/UserClasses.vue'
 export default {
+
     data() {
         return {
             user: '',

@@ -1,35 +1,6 @@
 <template>
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="invoice p-3 mb-1">
-                        <div class="row">
-                            <div class="col-12">
-                                <h5>
-                                    Lesson Title: {{ lessons.title }}
-                                    <small class="float-right">Date: {{ lessons.date }}</small>
-                                </h5>
-                                <hr />
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- info row -->
-                        <div class="row invoice-info">
-                            <div class="col-sm-6 invoice-col">
-                                <address>
-                                    Duration: <strong>{{ lessons.duration }}</strong><br>
-                                    Class: {{ lessons.name }}<strong></strong>
-                                </address>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="content">
-        <div class="container-fluid">
             <section class="content">
                 <div class="row">
                     <div class="col-md-12">
@@ -38,57 +9,53 @@
                                 <h3 class="card-title">Lesson Plan Setup</h3>
                             </div>
                             <div class="card-body">
-                                <button class="btn btn-primary btn-sm mb-3 mr-1 float-right" data-toggle="modal"
-                                    data-target="#modal-evaluation" v-if="lessonParts.length === 3"><i
-                                        class="fa fa-plus-circle"></i> Duration:
-                                    Evaluation
-                                </button>
-                                <button class="btn btn-primary btn-sm mb-3 mr-1 float-right" data-toggle="modal"
-                                    data-target="#modal-evaluation" v-if="lessonParts.length === 2"><i
-                                        class="fa fa-plus-circle"></i> Duration:
-                                    Conclusion
-                                </button>
+                                <section class="content ">
+                                    <div class="container-fluid">
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+                                                <div class="invoice p-3 mb-1">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <h5>
+                                                                Lesson Title: {{ lesson.title }}
+                                                                <small class="float-right">Date: {{
+                                                                    lesson.date
+                                                                }}</small>
+                                                            </h5>
+                                                            <hr />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row invoice-info">
+                                                        <div class="col-sm-6 invoice-col">
+                                                            <address>
+                                                                Duration: <strong>{{ lesson.duration }}</strong><br>
+                                                                Class: {{ lesson.name }}<strong></strong><br />
 
-                                <button class="btn btn-primary btn-sm mb-3 mr-1 float-right" data-toggle="modal"
-                                    data-target="#modal-lessonBody" v-if="lessonParts.length === 1"><i
-                                        class="fa fa-plus-circle"></i> Duration: Lesson
-                                    Body
-                                </button>
-                                <button class="btn btn-primary btn-sm mb-3 mr-1 float-right" data-toggle="modal"
-                                    data-target="#modal-setTimeIntro" v-if="lessonParts.length === 0"><i
-                                        class="fa fa-plus-circle"></i> Duration:
-                                    Intro/Revision
-                                </button>
-                                <template v-if="lessonParts.length === 0">
-                                    <p align="center">No lesson Parts found</p>
-                                </template>
-                                <template v-else>
-                                    <table class="table table-bordered mb-4">
-                                        <thead>
-                                            <th>Lesson Part</th>
-                                            <th>Duration</th>
-                                            <th>Action</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="item in lessonParts" :key="item.id">
-                                                <td>{{ item.type }}</td>
-                                                <td>{{ item.lessonTime }}</td>
-                                                <td>
-                                                    <a href="#" class="btn btn-secondary btn-xs"><i
-                                                            class="fa fa-pencil-alt"></i></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </template>
+                                                            </address>
+
+                                                        </div>
+                                                        <div class="col-sm-6 invoice-col">
+
+                                                            <address>
+                                                                <strong>Learning Objectives:</strong> <span
+                                                                    v-html="lesson.objectives"></span>
+                                                            </address>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
                                 <div class="card card-primary card-outline">
                                     <div class="card-header">
                                         <h3 class="card-title">
                                             <i class="fas fa-edit"></i>
                                             Lesson Activities
                                         </h3>
-                                        <button class="btn btn-secondary btn-xs float-right" @click="exportToPdf"><i
-                                                class="fa fa-file-pdf"></i> Export to PDF</button>
+                                        <button class="btn btn-secondary btn-xs float-right"
+                                            @click="getPDFLessonPlan"><i class="fa fa-file-pdf"></i> Export to
+                                            PDF</button>
                                         <a href="#" class="btn btn-primary btn-xs float-right mr-2" data-toggle="modal"
                                             data-target="#modal-lessonEvaluation"><i class="fa fa-plus-circle"></i> Add
                                             Evaluation</a>
@@ -155,103 +122,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="modal-setTimeIntro">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Lesson Introduction </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form @submit.prevent="setTimeIntro">
-                                    <div class="modal-body">
-                                        <input type="number" class="form-control" v-model="duration"
-                                            placeholder="How long is the introduction/revision?" />
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="modal-lessonBody">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Lesson Body </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form @submit.prevent="setTimeBody">
-                                    <div class="modal-body">
-                                        <input type="number" class="form-control" v-model="duration"
-                                            placeholder="How long will be lesson Body" />
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="modal-evaluation">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Lesson Evaluation </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form @submit.prevent="setTimeEvaluation">
-                                    <div class="modal-body">
-                                        <input type="number" class="form-control" v-model="duration"
-                                            placeholder="How long will be lesson Evaluation" />
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="modal-conclusion">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Lesson Conclusion </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form @submit.prevent="setTimeConclusion">
-                                    <div class="modal-body">
 
-                                        <input type="number" class="form-control" v-model="duration"
-                                            placeholder="How long will be lesson Evaluation" />
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="modal fade" id="modal-teacher">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -299,7 +170,7 @@
 
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label>competences</label>
+                                                                            <label>Competences</label>
                                                                             <QuillEditor theme="snow"
                                                                                 content-type="html"
                                                                                 v-model:content="formActivities.competences" />
@@ -394,7 +265,7 @@ export default {
     },
     data() {
         return {
-            lesson: null,
+            lesson: {},
             type: 'Introduction',
             body: 'Lesson body',
             conclusion: 'Conclusion',
@@ -405,18 +276,7 @@ export default {
             lessonPart: [],
             lessonActivities: [],
             lessonEvaluations: [],
-            formData: {
-                content: ref(''),
-                lessonPartId: null
-            },
-            formLearner: {
-                content: ref(''),
-                lessonPartId: null
-            },
-            formCompetence: {
-                content: ref(''),
-                lessonPartId: null
-            },
+
             formActivities: {
                 lessonPartId: null,
                 teacherActivities: ref(''),
@@ -434,7 +294,6 @@ export default {
 
         this.getLesson()
         this.getLessonPart()
-        this.getLessonParts()
         this.teacherActivities()
         this.getLessonActivities()
         this.getLessonEvaluations()
@@ -459,60 +318,6 @@ export default {
                 this.lessonParts = []
             })
         },
-        async getLessonParts() {
-            await axios.get(`http://localhost:8000/api/v1/lesson-part-management/get-lesson/${this.$route.params.id}`).then(response => {
-
-                this.lessonPart = response.data
-            }).catch(error => {
-                console.log(error)
-                this.lessonPart = []
-            })
-        },
-        async setTimeIntro() {
-            await axios.post('http://localhost:8000/api/v1/lesson-part-management', {
-                type: this.type,
-                duration: this.duration,
-                lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        async setTimeBody() {
-            await axios.post('http://localhost:8000/api/v1/lesson-part-management', {
-                type: this.body,
-                duration: this.duration,
-                lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-        async setTimeEvaluation() {
-            await axios.post('http://localhost:8000/api/v1/lesson-part-management', {
-                type: this.evaluation,
-                duration: this.duration,
-                lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-        async setTimeConclusion() {
-            await axios.post('http://localhost:8000/api/v1/lesson-part-management', {
-                type: this.conclusion,
-                duration: this.duration,
-                lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
 
         async teacherActivities() {
             await axios.get(`http://localhost:8000/api/v1/teacher-activities/get-activity/${this.$route.params.id}`).then(response => {
@@ -521,59 +326,6 @@ export default {
                 console.log(error)
                 this.teacherActivity = []
             })
-        },
-        async setTeacherActivityIntro() {
-            await axios.post('http://localhost:8000/api/v1/teacher-activities', {
-                content: this.formData.content,
-                lessonPartId: this.lessonParts.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        async setTeacherActivity() {
-            await axios.post('http://localhost:8000/api/v1/teacher-activities', {
-                content: this.formData.content,
-                lessonPartId: this.lessonParts.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        async setLearnerActivity() {
-            await axios.post('http://localhost:8000/api/v1/learner-activities', {
-                content: this.formLearner.content,
-                lessonPartId: this.lessonParts.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-        async setCompetence() {
-            await axios.post('http://localhost:8000/api/v1/lesson-competence', {
-                content: this.formCompetence.content,
-                lessonPartId: this.lessonParts.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
-        },
-
-        async setEvaluation() {
-            await axios.post('http://localhost:8000/api/v1/lesson-evaluation', {
-                content: this.formEvaluation.content,
-                lessonPartId: this.formEvaluation.lessonPartId,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
         },
 
         async setLessonActivities() {
@@ -605,14 +357,15 @@ export default {
                 this.lessonEvaluations = []
             })
         },
-        // exportToPdf() {
-        //     const doc = new jsPDF();
-        //     const repo = this.getLessonEvaluations();
+        async getPDFLessonPlan() {
+            await axios.get(`http://localhost:8000/api/v1/lesson-management/lesson/pdf/${this.$route.params.id}`).then(response => {
+                this.lessonEvaluations = response.data
+            }).catch(error => {
+                console.log(error)
+                this.lessonEvaluations = []
+            })
+        }
 
-        //     doc.text(repo, 10, 10);
-        //     doc.save("a4.pdf");
-
-        // }
     }
 
 }

@@ -17,11 +17,16 @@ import CreateClass from '@/views/teacher/pages/classes/CreateClass.vue'
 import SubjectUnits from '@/views/teacher/pages/units/UnitView.vue'
 import LessonCreateSteps from '@/views/teacher/pages/lesson/LessonCreateSteps.vue'
 import LessonList from '@/views/teacher/pages/lesson/LessonList.vue'
+import LessonDetails from '@/views/teacher/pages/lesson/LessonDetails.vue'
 import LessonPlanCreate from '@/views/teacher/pages/lesson/LessonPlanCreate.vue'
 import UnitList from '@/views/teacher/pages/units/UnitList'
 import UnitCreate from '@/views/teacher/pages/units/UnitCreate'
 import LessonView from '@/views/teacher/pages/lesson/LessonPlanCreate'
 import LessonPartSetup from '@/views/teacher/pages/lesson/lessonIntroduction/SetLessonParts'
+import LessonIntroduction from '@/views/teacher/pages/lesson/lessonIntroduction/LessonIntroduction'
+import LessonActivities from '@/views/teacher/pages/lesson/lessonIntroduction/SetLessonActivities'
+import LessonParts from '@/views/teacher/pages/lesson/LessonParts'
+import Units from '@/views/admin/pages/units/ViewUnits.vue'
 
 const routes = [
   {
@@ -54,6 +59,9 @@ const routes = [
       {
         path: '/department/edit/:id', name: 'edit', component: EditDepartment
       },
+      {
+        path: '/admin/units', name: 'admin.units', component: Units
+      }
     ]
   },
   {
@@ -107,13 +115,25 @@ const routes = [
       {
         path: '/teacher/lessons', name: 'lesson.list', component: LessonList
       },
+      {
+        path: '/teacher/lesson/:id/details', name: 'lesson.details', component: LessonDetails
+      },
 
       {
         path: '/teacher/lesson/plan/create/:id', name: 'lesson.plan.create', component: LessonPlanCreate
       },
 
       {
-        path: '/teacher/lesson/parts/:id', name: 'lesson.parts', component: LessonPartSetup
+        path: '/teacher/lesson/parts/:id', name: 'lesson.part', component: LessonPartSetup
+      },
+      {
+        path: '/teacher/lesson/parts/activities/:id', name: 'lesson.parts.activities', component: LessonIntroduction
+      },
+      {
+        path: '/teacher/lesson/activities/:id', name: 'lesson.activities', component: LessonActivities
+      },
+      {
+        path: '/teacher/lesson/parts/:id', name: 'lesson.parts', component: LessonParts
       }
     ]
   },
@@ -187,4 +207,5 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 export default router

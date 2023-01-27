@@ -1,32 +1,34 @@
 <template>
     <div class="card mr-3">
-        <h5 class="card-header bg-primary mb-3">Class Subjects</h5>
+        <h5 class="card-header bg-primary mb-3">All Units</h5>
         <div class="card-body">
-            <div class="col-12 mb-2 text-end">
-                <router-link :to="{ name: 'subject.create' }" class="btn btn-primary btn-sm float-right mr-4"><i
-                        class="fas fa-plus mr-1"></i>Add
-                    New Subject</router-link>
-            </div>
-            <table class="table">
+
+            <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Subject Name</th>
-                        <th>Class Name</th>
-                        <th>Action</th>
+                        <th>Unit No</th>
+                        <th>Subject</th>
+                        <th>Unit Title</th>
+                        <th>Unit Key Competence</th>
+                        <th>Class</th>
+                        <th>Teacher</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in subjects" @key="index">
+                    <tr v-for="(item, index) in units" @key="index">
                         <td>{{ index + 1 }}</td>
+                        <td>{{ item.unit_no }}</td>
                         <td>{{ item.subjectName }}</td>
-                        <td>{{ item.className }}</td>
+                        <td>{{ item.title }}</td>
                         <td>
-                            <router-link :to="{ name: 'subject.units', params: { id: item.id } }"
-                                class="btn btn-default">
-                                <i class="fas fa-bars"></i> Subject Details
-                            </router-link>
+                            <span v-html="item.key_unit_competence"></span>
                         </td>
+                        <td>{{ item.className }}</td>
+                        <td>{{ item.f_name }} {{ item.l_name }}</td>
+
+
                     </tr>
                 </tbody>
             </table>
@@ -41,24 +43,24 @@ export default {
     data() {
         return {
             user: '',
-            subject: 0,
-            subjects: []
+            unit: 0,
+            units: []
         }
     },
     methods: {
 
-        async getSubjects() {
-            await axios.get(`http://localhost:8000/api/v1/subject-management/user`)
+        async getUnits() {
+            await axios.get(`http://localhost:8000/api/v1/unit-management`)
                 .then(response => {
-                    this.subjects = response.data
+                    this.units = response.data
                 }).catch(error => {
                     console.log(error)
-                    this.subjects = []
+                    this.units = []
                 })
         },
     },
     created() {
-        this.getSubjects();
+        this.getUnits();
         axios.defaults.headers.common['Content-Type'] = 'application/json'
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
 

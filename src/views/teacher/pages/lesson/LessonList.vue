@@ -1,41 +1,44 @@
 <template>
     <div class="row">
         <div class="col-12 mb-2 text-end">
-            <router-link :to="{ name: 'lesson.new' }" class="btn btn-primary btn-sm float-right mr-4"><i
-                    class="fas fa-plus mr-1"></i>Add
-                New Lesson</router-link>
+            <router-link :to="{ name: 'lesson.new' }" class="btn btn-primary btn-sm mb-2"><i
+                    class="fas fa-plus mr-1"></i> New Lesson</router-link>
         </div>
-        <table class="table">
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Unit</th>
-                <th>Topic Area</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
-            <tbody>
-                <tr v-for="item in lessons" :key="item.id">
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.title }}</td>
-                    <td>{{ item.unitName }}</td>
-                    <td>{{ item.topic_area }}</td>
-                    <td>{{ item.date }}</td>
-                    <td>
-                        <router-link :to="{ name: 'lesson.parts', params: { id: item.id } }"
-                            class="btn btn-primary mr-2 btn-sm"><i class="fas fa-ellipsis-v"></i> Go to
-                            Lesson Plan
-                        </router-link>
+    </div>
+    <div class="row">
+        <div class="col-md-4" v-for="item in lessons" :key="item.id">
+            <div class="card card-widget">
 
-                        <router-link to="#" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i> Edit
-                        </router-link>
-                    </td>
-                </tr>
-            </tbody>
+                <div class="card-header">
+                    <router-link to="#" class=" mr-4 float-right">
+                        <i class="fa fa-pencil-alt"></i>
+                    </router-link>
+                    <p><span class="username"><strong>Lesson Title:</strong><br />{{ item.title
+}}</span></p>
+
+                    <p><small><span class="description"><strong>Unit:</strong> {{ item.unitName }}</span></small></p>
+
+                </div>
+                <div class="card-body">
+                    <strong><u>Learning Objectives:</u></strong>
+                    <p><span v-html="item.instructional_objective"></span></p>
+                    <hr />
+                    <router-link :to="{ name: 'lesson.details', params: { id: item.id } }"
+                        class="btn btn-primary mr-2 btn-xs">
+                        Lesson Plan
+                    </router-link>
 
 
-        </table>
+                    <router-link :to="{ name: 'lesson.part', params: { id: item.id } }"
+                        class="btn btn-dark mr-2 btn-xs">
+                        Lesson Parts
+                    </router-link>
 
+
+
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -51,9 +54,6 @@ export default {
     },
     mounted() {
         this.getLessons()
-        axios.defaults.headers.common['Content-Type'] = 'application/json'
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')
-
     },
     methods: {
         async getLessons() {
