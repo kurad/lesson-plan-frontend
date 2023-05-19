@@ -14,13 +14,13 @@
 
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <router-link :to="{ name: 'dashboard' }" class="nav-link">
+                        <router-link :to="{ name: 'dashboard' }" class="nav-link" active-class="active">
                             <i class="fas fa-tachometer-alt nav-icon"></i>
                             <p>Dashboard</p>
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'department' }" class="nav-link">
+                        <router-link :to="{ name: 'department' }" class="nav-link" active-class="active">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Departments</p>
                         </router-link>
@@ -28,7 +28,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'admin.units' }" class="nav-link">
+                <router-link :to="{ name: 'admin.units' }" class="nav-link" active-class="active">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Units
@@ -37,7 +37,16 @@
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'admin.units' }" class="nav-link">
+                <router-link :to="{ name: 'admin.users' }" class="nav-link" active-class="active">
+                    <i class="nav-icon fas fa-user"></i>
+                    <p>
+                        Users
+                    </p>
+                </router-link>
+            </li>
+
+            <li class="nav-item">
+                <router-link :to="{ name: 'admin.lesson.list' }" class="nav-link" active-class="active">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Lessons
@@ -74,53 +83,42 @@
         </ul>
     </nav>
     <nav class="mt-2" v-if="loginType === 'Teacher'">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
 
             <li class="nav-item menu-open">
-
-                <!-- <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <router-link :to="{name: 'Dashboard'}" class="nav-link">
-                            <i class="fas fa-tachometer-alt nav-icon"></i>
-                            <p>Dashboard</p>
-                        </router-link>
-                    </li>
-
-                </ul> -->
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'classes' }" class="nav-link">
+                <router-link :to="{ name: 'classes' }" class="nav-link" active-class="active">
                     <i class="nav-icon fas fa-th"></i>
                     <p> My Classes </p>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'subject.list' }" class="nav-link">
+                <router-link :to="{ name: 'subject.list' }" class="nav-link" active-class="active">
                     <i class="nav-icon fas fa-book"></i>
                     <p> My Subjects </p>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'units' }" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
+                <router-link :to="{ name: 'units' }" class="nav-link" active-class="active">
+                    <i class="nav-icon fas fa-clipboard-list"></i>
                     <p> Units </p>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link :to="{ name: 'lesson.list' }" class="nav-link">
-                    <i class="nav-icon fas fa-book"></i>
+                <router-link :to="{ name: 'lesson.list' }" class="nav-link" active-class="active">
+                    <i class="nav-icon fas fa-bars"></i>
                     <p> My Lessons </p>
                 </router-link>
             </li>
-
 
         </ul>
     </nav>
 </template>
 <script>
 import axios from 'axios'
-import UserClasses from '@/views/teacher/pages/classes/UserClasses.vue'
 export default {
+    name: "NavBar",
 
     data() {
         return {

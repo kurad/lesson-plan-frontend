@@ -1,4 +1,24 @@
 <template>
+    <section class="content">
+        <div class="row">
+            <div class="col-12" id="accordion">
+                <div class="card card-primary card-outline">
+                    <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                1. Lorem ipsum dolor sit amet
+                            </h4>
+                        </div>
+                    </a>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="card mr-3">
         <h5 class="card-header bg-primary mb-3">All Units</h5>
         <div class="card-body">

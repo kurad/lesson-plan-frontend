@@ -17,16 +17,22 @@ import CreateClass from '@/views/teacher/pages/classes/CreateClass.vue'
 import SubjectUnits from '@/views/teacher/pages/units/UnitView.vue'
 import LessonCreateSteps from '@/views/teacher/pages/lesson/LessonCreateSteps.vue'
 import LessonList from '@/views/teacher/pages/lesson/LessonList.vue'
+import LessonDetailsAdmin from '@/views/admin/pages/lessons/LessonDetails.vue'
+import LessonListAdmin from '@/views/admin/pages/lessons/AdminLessonList.vue'
 import LessonDetails from '@/views/teacher/pages/lesson/LessonDetails.vue'
 import LessonPlanCreate from '@/views/teacher/pages/lesson/LessonPlanCreate.vue'
 import UnitList from '@/views/teacher/pages/units/UnitList'
 import UnitCreate from '@/views/teacher/pages/units/UnitCreate'
-import LessonView from '@/views/teacher/pages/lesson/LessonPlanCreate'
+// import LessonView from '@/views/teacher/pages/lesson/LessonPlanCreate'
 import LessonPartSetup from '@/views/teacher/pages/lesson/lessonIntroduction/SetLessonParts'
 import LessonIntroduction from '@/views/teacher/pages/lesson/lessonIntroduction/LessonIntroduction'
 import LessonActivities from '@/views/teacher/pages/lesson/lessonIntroduction/SetLessonActivities'
 import LessonParts from '@/views/teacher/pages/lesson/LessonParts'
 import Units from '@/views/admin/pages/units/ViewUnits.vue'
+import Users from '@/views/admin/users/UserList.vue'
+import UserDetail from '@/views/admin/users/UserDetail.vue'
+import LessonSetting from '@/views/teacher/pages/lesson/lessonSettings/LessonSettings.vue'
+import EditLessonPart from '@/views/teacher/components/lessonParts/EditLessonPart.vue'
 
 const routes = [
   {
@@ -52,7 +58,6 @@ const routes = [
       {
         path: '/department', name: 'department', component: DepartmentList
       },
-
       {
         path: '/department/create', name: 'department.create', component: CreateDepartment
       },
@@ -61,7 +66,19 @@ const routes = [
       },
       {
         path: '/admin/units', name: 'admin.units', component: Units
-      }
+      },
+      {
+        path: '/admin/users', name: 'admin.users', component: Users
+      },
+      {
+        path: '/admin/users/:id', name: 'users.details', component: UserDetail
+      },
+      {
+        path: '/admin/lessons', name: 'admin.lesson.list', component: LessonListAdmin
+      },
+      {
+        path: '/admin/lessons', name: 'admin.lesson.details', component: LessonDetailsAdmin
+      },
     ]
   },
   {
@@ -134,6 +151,14 @@ const routes = [
       },
       {
         path: '/teacher/lesson/parts/:id', name: 'lesson.parts', component: LessonParts
+      },
+      {
+        path: '/teacher/lesson/settings/:id', name: 'lesson.settings', component: LessonSetting
+      },
+      {
+        path: '/teacher/lesson/part/:id',
+        name: 'edit.lesson.part',
+        component: EditLessonPart
       }
     ]
   },
@@ -184,7 +209,6 @@ router.beforeEach((to, from, next) => {
         } else next({
           name: 'home'
         })
-
       } else if (to.matched.some(record => record.meta.isDean)) {
         if (roles.includes('Dean of Academics')) next()
         else if (roles[0] === 'Teacher') {

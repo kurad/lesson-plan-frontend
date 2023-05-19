@@ -12,8 +12,8 @@
                                         <select class="form-control select2" v-model="subject" @change="getUnits()">
                                             <option value="0">-- Select Subject --</option>
                                             <option v-for="item in subjects" :key="item.id" :value="item.id">{{
-                                                    item.subjectName
-                                            }} </option>
+                                                item.subjectName
+                                            }}({{ item.className }}) </option>
 
                                         </select>
                                     </div>
@@ -64,8 +64,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>What are your Instructional Objectives?</label>
-                                        <QuillEditor v-model:content="formData.instructional_objective"
-                                            content-type="html" theme="snow" />
+                                        <QuillEditor v-model:content="formData.instructional_objective" content-type="html"
+                                            theme="snow" />
 
                                     </div>
                                 </div>
@@ -83,8 +83,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Skills</label>
-                                        <QuillEditor v-model:content="formData.skills" content-type="html"
-                                            theme="snow" />
+                                        <QuillEditor v-model:content="formData.skills" content-type="html" theme="snow" />
                                     </div>
                                 </div>
                             </div>
@@ -125,8 +124,8 @@
                                 </div>
                             </div>
                         </template>
-                        <button v-if="steps > 1" @click.prevent="previousStep" type="button"
-                            class="btn btn-danger">Previous </button>
+                        <button v-if="steps > 1" @click.prevent="previousStep" type="button" class="btn btn-danger">Previous
+                        </button>
                         <button type="submit" v-if="steps === 6" class="btn btn-success float-right mr-2">Save </button>
                         <button type="button" v-if="steps != 6" @click.prevent="nextStep"
                             class="btn btn-primary float-right mr-2">Next
@@ -218,7 +217,7 @@ export default {
                 reference: this.formData.reference,
             })
                 .then(response => (
-                    this.$router.push({ name: 'lesson.plan.create' }),
+                    this.$router.push({ name: 'lesson.list' }),
                     console.log(response)
                 ))
                 .catch(err => console.log(err))

@@ -1,5 +1,4 @@
 <template>
-
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="card">
@@ -33,7 +32,7 @@
                         </div>
                     </form>
 
-                    <div class="social-auth-links text-center mb-3">
+                    <!-- <div class="social-auth-links text-center mb-3">
                         <p>- OR -</p>
                         <a href="#" class="btn btn-block btn-primary">
                             <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
@@ -41,7 +40,7 @@
                         <a href="#" class="btn btn-block btn-danger">
                             <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
                         </a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -66,7 +65,7 @@ export default {
     },
     methods: {
         loginForm() {
-            axios.post('http://localhost:8000/api/login', {
+            axios.post('http://localhost:8000/api/v1/auth/login', {
                 email: this.email,
                 password: this.password
             })

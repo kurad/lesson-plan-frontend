@@ -44,7 +44,7 @@
                                     Evaluation
                                 </button>
                                 <button class="btn btn-primary btn-sm mb-3 mr-1 float-right" data-toggle="modal"
-                                    data-target="#modal-evaluation" v-if="lessonParts.length === 2"><i
+                                    data-target="#modal-conclusion" v-if="lessonParts.length === 2"><i
                                         class="fa fa-plus-circle"></i> Duration:
                                     Conclusion
                                 </button>
@@ -107,8 +107,7 @@
                                                     <th>Action</th>
                                                 </thead>
                                                 <tbody>
-                                                    <template
-                                                        v-if="!lessonActivities.length || lessonEvaluations.length">
+                                                    <template v-if="!lessonActivities.length || lessonEvaluations.length">
                                                         <tr>
                                                             <td colspan="5" align="center"><b>No Lesson Activities
                                                                     available</b></td>
@@ -170,8 +169,7 @@
                                             placeholder="How long is the introduction/revision?" />
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Save
                                         </button>
                                     </div>
@@ -194,8 +192,7 @@
                                             placeholder="How long will be lesson Body" />
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Save
                                         </button>
                                     </div>
@@ -218,8 +215,7 @@
                                             placeholder="How long will be lesson Evaluation" />
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Save
                                         </button>
                                     </div>
@@ -240,11 +236,10 @@
                                     <div class="modal-body">
 
                                         <input type="number" class="form-control" v-model="duration"
-                                            placeholder="How long will be lesson Evaluation" />
+                                            placeholder="How long will be lesson Conlusion" />
                                     </div>
                                     <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default"
-                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Save
                                         </button>
                                     </div>
@@ -286,22 +281,19 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Teacher Activities</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.teacherActivities" />
 
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Learner Activities</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.learnerActivities" />
 
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>competences</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.competences" />
 
                                                                         </div>
@@ -356,8 +348,7 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Evaluation Questions</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formEvaluation.content" />
                                                                         </div>
                                                                     </div>
@@ -385,8 +376,9 @@
 import { QuillEditor } from "@vueup/vue-quill";
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import axios from "axios";
+import { Modal } from 'bootstrap'
+
 import { ref } from 'vue';
-import { jsPDF } from "jspdf";
 export default {
 
     components: {
@@ -438,6 +430,8 @@ export default {
         this.teacherActivities()
         this.getLessonActivities()
         this.getLessonEvaluations()
+        this.modal = new Modal(document.getElementById('modal-setTimeIntro'))
+        this.modal = new Modal(document.getElementById('modal-lessonBody'))
 
     },
     methods: {
@@ -473,11 +467,9 @@ export default {
                 type: this.type,
                 duration: this.duration,
                 lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
+            })
+            $this.closeModal();
+            location.reload();
         },
 
         async setTimeBody() {
@@ -485,11 +477,9 @@ export default {
                 type: this.body,
                 duration: this.duration,
                 lessonId: this.lesson.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.details' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
+            })
+            $this.closeModal();
+            location.reload();
         },
         async setTimeEvaluation() {
             await axios.post('http://localhost:8000/api/v1/lesson-part-management', {
@@ -526,11 +516,9 @@ export default {
             await axios.post('http://localhost:8000/api/v1/teacher-activities', {
                 content: this.formData.content,
                 lessonPartId: this.lessonParts.id,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
+            })
+            $this.closeModal();
+            location.reload();
         },
 
         async setTeacherActivity() {
@@ -605,6 +593,12 @@ export default {
                 this.lessonEvaluations = []
             })
         },
+        openModal() {
+            this.modal.show()
+        },
+        closeModal() {
+            this.modal.hide()
+        }
         // exportToPdf() {
         //     const doc = new jsPDF();
         //     const repo = this.getLessonEvaluations();

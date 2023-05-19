@@ -25,7 +25,9 @@
                                     <label>Subject</label>
                                     <select class="form-control" v-model="unit.subjectId">
                                         <option value="0">-- Select Subject --</option>
-                                        <option v-for="item in subjects" :value="item.id">{{ item.subjectName }}
+                                        <option v-for="item in subjects" :value="item.id" :key="item.id">{{ item.subjectName
+                                        }}({{
+    item.className }})
                                         </option>
                                     </select>
                                 </div>
@@ -57,7 +59,7 @@ import { QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { ref } from 'vue'
 export default {
-    name: "Create Unit",
+    name: "CreateUnit",
     components: {
         QuillEditor
     },

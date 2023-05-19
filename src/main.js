@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import { BootstrapVue3 } from 'bootstrap-vue-3'
 import { CKEditor } from '@ckeditor/ckeditor5-vue';
+import jQuery from 'jquery';
+
 
 import 'admin-lte/dist/css/adminlte.min.css'
 import 'admin-lte/plugins/fontawesome-free/css/all.min.css'
@@ -13,6 +15,7 @@ import 'admin-lte/dist/js/adminlte.min.js'
 import './components/axios'
 
 
+window.$ = window.jQuery = jQuery;
 const app = createApp(App);
 app.use(store)
 app.use(BootstrapVue3)

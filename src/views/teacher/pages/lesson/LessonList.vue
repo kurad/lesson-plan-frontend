@@ -1,23 +1,49 @@
 <template>
     <div class="row">
         <div class="col-12 mb-2 text-end">
-            <router-link :to="{ name: 'lesson.new' }" class="btn btn-primary btn-sm mb-2"><i
-                    class="fas fa-plus mr-1"></i> New Lesson</router-link>
+            <router-link :to="{ name: 'lesson.new' }" class="btn btn-primary btn-sm mb-2"><i class="fas fa-plus mr-1"></i>
+                New Lesson</router-link>
         </div>
     </div>
+    <table class="table">
+        <thead>
+            <th>#</th>
+            <th>Lesson Title</th>
+            <th>Unit</th>
+            <th>Class</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr v-for="item in lessons" :key="item.id">
+                <td>{{ item.id }}</td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.unitName }}</td>
+                <td>{{ item.className }}</td>
+                <td><router-link :to="{ name: 'lesson.details', params: { id: item.id } }"
+                        class="btn btn-primary mr-2 btn-xs"><i class="fa fa-eye"></i>
+                        Lesson Details
+                    </router-link></td>
+            </tr>
+        </tbody>
+    </table>
     <div class="row">
         <div class="col-md-4" v-for="item in lessons" :key="item.id">
             <div class="card card-widget">
-
                 <div class="card-header">
                     <router-link to="#" class=" mr-4 float-right">
                         <i class="fa fa-pencil-alt"></i>
                     </router-link>
-                    <p><span class="username"><strong>Lesson Title:</strong><br />{{ item.title
-}}</span></p>
-
-                    <p><small><span class="description"><strong>Unit:</strong> {{ item.unitName }}</span></small></p>
-
+                    <p>
+                        <span class="username"><strong>Lesson Title:</strong><br />
+                            {{ item.title }}
+                        </span>
+                    </p>
+                    <p>
+                        <small>
+                            <span class="description"><strong>Unit:</strong>
+                                {{ item.unitName }}
+                            </span></small>
+                    </p>
                 </div>
                 <div class="card-body">
                     <strong><u>Learning Objectives:</u></strong>
@@ -27,25 +53,22 @@
                         class="btn btn-primary mr-2 btn-xs">
                         Lesson Plan
                     </router-link>
-
-
-                    <router-link :to="{ name: 'lesson.part', params: { id: item.id } }"
-                        class="btn btn-dark mr-2 btn-xs">
+                    <router-link :to="{ name: 'lesson.part', params: { id: item.id } }" class="btn btn-dark mr-2 btn-xs">
                         Lesson Parts
                     </router-link>
-
-
-
+                    <router-link :to="{ name: 'lesson.settings', params: { id: item.id } }"
+                        class="btn btn-block btn-outline-primary  mr-2"><i class="fa fa-gear"></i>
+                        Lesson Settings
+                    </router-link>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
-    name: "Lessons",
+    name: "LessonList",
     data() {
         return {
             lessons: [],
@@ -64,7 +87,6 @@ export default {
                 this.lessons = []
             })
         },
-
         deleteClass(id) {
             if (confirm("Are you sure to delete this class ?")) {
                 axios.delete(`http://localhost:8000/api/v1/class-setup/${id}`).then(response => {

@@ -17,6 +17,7 @@
     "bootstrap-vue-3": "^0.3.12",
     "ckeditor5-vue3": "^1.0.2",
     "core-js": "^3.8.3",
+    "jquery": "^3.6.4",
     "jspdf": "^2.5.1",
     "vue": "^3.2.13",
     "vue-html2pdf": "^1.8.0",

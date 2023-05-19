@@ -12,15 +12,13 @@
                                 <section class="content ">
                                     <div class="container-fluid">
                                         <div class="row mb-2">
-                                            <div class="col-12">
+                                            <div class="col-8">
                                                 <div class="invoice p-3 mb-1">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <h5>
                                                                 Lesson Title: {{ lesson.title }}
-                                                                <small class="float-right">Date: {{
-                                                                    lesson.date
-                                                                }}</small>
+
                                                             </h5>
                                                             <hr />
                                                         </div>
@@ -30,6 +28,7 @@
                                                             <address>
                                                                 Duration: <strong>{{ lesson.duration }}</strong><br>
                                                                 Class: {{ lesson.name }}<strong></strong><br />
+                                                                Date: {{ lesson.date }}
 
                                                             </address>
 
@@ -44,84 +43,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-4">
+                                                <!-- Lesson part component -->
+                                                <LessonPart />
+                                                <!-- End Lesson part component -->
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
-                                <div class="card card-primary card-outline">
-                                    <div class="card-header">
-                                        <h3 class="card-title">
-                                            <i class="fas fa-edit"></i>
-                                            Lesson Activities
-                                        </h3>
-                                        <button class="btn btn-secondary btn-xs float-right"
-                                            @click="getPDFLessonPlan"><i class="fa fa-file-pdf"></i> Export to
-                                            PDF</button>
-                                        <a href="#" class="btn btn-primary btn-xs float-right mr-2" data-toggle="modal"
-                                            data-target="#modal-lessonEvaluation"><i class="fa fa-plus-circle"></i> Add
-                                            Evaluation</a>
-                                        <a href="#" class="btn btn-primary btn-xs float-right mr-2" data-toggle="modal"
-                                            data-target="#modal-teacher"><i class="fa fa-plus-circle"></i> Add
-                                            Activity</a>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <table class="table table-bordered mb-4">
-                                                <thead>
-                                                    <th>Lesson Part</th>
-                                                    <th>Teacher Activities</th>
-                                                    <th>Learner Activities</th>
-                                                    <th>Competences</th>
-                                                    <th>Action</th>
-                                                </thead>
-                                                <tbody>
-                                                    <template
-                                                        v-if="!lessonActivities.length || lessonEvaluations.length">
-                                                        <tr>
-                                                            <td colspan="5" align="center"><b>No Lesson Activities
-                                                                    available</b></td>
-                                                        </tr>
-                                                    </template>
-                                                    <template v-else>
-                                                        <tr v-for="item in lessonActivities" :key="item.id">
-                                                            <td>
-                                                                {{ item.type }}<br />
-                                                                <small>{{ item.partDuration }}</small>
-                                                            </td>
-                                                            <td>
-                                                                <p v-html="item.teacher_activities"></p>
-                                                            </td>
-                                                            <td>
-                                                                <p v-html="item.learner_activities"></p>
-                                                            </td>
-                                                            <td>
-                                                                <p v-html="item.competences"></p>
-                                                            </td>
-                                                            <td>
-                                                                <router-link class="btn btn-warning btn-xs ml-2"
-                                                                    :to="{ name: 'lesson.activities', params: { id: item.id } }">
-                                                                    <i class="fa-solid fas fa-pencil-alt sm"></i>
-                                                                </router-link>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>{{ lessonEvaluations.type }} <br />
-                                                                <small>{{ lessonEvaluations.partDuration }}</small>
-                                                            </td>
-                                                            <td colspan="3">
-                                                                <p v-html="lessonEvaluations.content"></p>
-                                                            </td>
-                                                        </tr>
-                                                    </template>
-                                                </tbody>
-                                            </table>
-                                            <router-link class="btn btn-success" :to="{ name: 'lesson.list' }">Back to
-                                                Lessons</router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Lesson Activities component -->
+                                <!-- <LessonActivities /> -->
+                                <!-- End Lesson Activities component -->
+
+
                             </div>
+
                         </div>
                     </div>
+
 
                     <div class="modal fade" id="modal-teacher">
                         <div class="modal-dialog modal-lg">
@@ -157,22 +96,19 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Teacher Activities</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.teacherActivities" />
 
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Learner Activities</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.learnerActivities" />
 
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Competences</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formActivities.competences" />
 
                                                                         </div>
@@ -227,8 +163,7 @@
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <label>Evaluation Questions</label>
-                                                                            <QuillEditor theme="snow"
-                                                                                content-type="html"
+                                                                            <QuillEditor theme="snow" content-type="html"
                                                                                 v-model:content="formEvaluation.content" />
                                                                         </div>
                                                                     </div>
@@ -247,8 +182,16 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <router-link :to="{ name: 'lesson.parts.activities' }" class="btn btn-primary">Lesson
+                            Activities</router-link>
+                    </div>
                 </div>
             </section>
+
         </div>
     </section>
 </template>
@@ -257,11 +200,17 @@ import { QuillEditor } from "@vueup/vue-quill";
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import axios from "axios";
 import { ref } from 'vue';
-import { jsPDF } from "jspdf";
+import { Modal } from 'bootstrap'
+import LessonPart from "../../components/lessonParts/LessonPart.vue";
+// import LessonActivities from '@/views/teacher/components/lessonActivities/LessonActivities.vue'
+// import LessonParts from "./LessonParts.vue";
+
 export default {
 
     components: {
         QuillEditor,
+        LessonPart,
+        // LessonActivities,
     },
     data() {
         return {
@@ -272,8 +221,7 @@ export default {
             evaluation: 'Evaluation',
             duration: null,
             lessonId: null,
-            lessonParts: [],
-            lessonPart: [],
+
             lessonActivities: [],
             lessonEvaluations: [],
 
@@ -297,7 +245,7 @@ export default {
         this.teacherActivities()
         this.getLessonActivities()
         this.getLessonEvaluations()
-
+        this.modal = new Modal(document.getElementById('modal-teacher'))
     },
     methods: {
         async getLesson() {
@@ -309,24 +257,16 @@ export default {
                 this.lesson = []
             })
         },
-        async getLessonPart() {
-            await axios.get(`http://localhost:8000/api/v1/lesson-part-management/lesson/${this.$route.params.id}`).then(response => {
-                this.lessonParts = response.data
 
-            }).catch(error => {
-                console.log(error)
-                this.lessonParts = []
-            })
-        },
 
-        async teacherActivities() {
-            await axios.get(`http://localhost:8000/api/v1/teacher-activities/get-activity/${this.$route.params.id}`).then(response => {
-                this.teacherActivity = response.data
-            }).catch(error => {
-                console.log(error)
-                this.teacherActivity = []
-            })
-        },
+        // async teacherActivities() {
+        //     await axios.get(`http://localhost:8000/api/v1/teacher-activities/teacher/activity/${this.$route.params.id}`).then(response => {
+        //         this.teacherActivity = response.data
+        //     }).catch(error => {
+        //         console.log(error)
+        //         this.teacherActivity = []
+        //     })
+        // },
 
         async setLessonActivities() {
             await axios.post('http://localhost:8000/api/v1/lesson-activities', {
@@ -334,11 +274,9 @@ export default {
                 learnerActivities: this.formActivities.learnerActivities,
                 competences: this.formActivities.competences,
                 lessonPartId: this.formActivities.lessonPartId,
-            }).then(response => (
-                this.$router.push({ name: 'lesson.activities' })
-            ))
-                .catch(err => console.log(err))
-                .finally(() => this.loading = false)
+            })
+            this.closeModal()
+            location.reload()
         },
         async getLessonActivities() {
             await axios.get(`http://localhost:8000/api/v1/lesson-activities/activities/${this.$route.params.id}`).then(response => {
@@ -364,6 +302,12 @@ export default {
                 console.log(error)
                 this.lessonEvaluations = []
             })
+        },
+        openModal() {
+            this.modal.show()
+        },
+        closeModal() {
+            this.modal.hide()
         }
 
     }

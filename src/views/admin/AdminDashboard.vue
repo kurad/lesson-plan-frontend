@@ -1,5 +1,4 @@
 <template>
-
     <body class="hold-transition sidebar-mini">
         <div class="wrapper">
 
@@ -7,18 +6,14 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                                class="fas fa-bars"></i></a>
+                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                     </li>
 
                 </ul>
-
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-user"></i>
-
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
@@ -37,9 +32,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
             <a href="index3.html" class="brand-link">
-                <img src="../../assets/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light"> {{loginName}}</span>
+                <img src="../../assets/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light"> {{ loginName }}</span>
             </a>
 
             <div class="sidebar">
@@ -47,11 +42,8 @@
                 <Navbar />
 
             </div>
-
         </aside>
-
         <div class="content-wrapper">
-
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
@@ -62,8 +54,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -72,9 +62,7 @@
                                 <div class="card-body">
                                     <router-view></router-view>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                 </div>

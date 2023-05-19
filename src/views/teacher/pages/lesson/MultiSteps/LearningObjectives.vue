@@ -1,3 +1,0 @@
-<template>
-    Learning Objectives
-</template>
